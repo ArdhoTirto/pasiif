@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,11 +13,40 @@
 <body>
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-    data-sidebar-position="fixed" data-header-position="fixed">
-
+  data-sidebar-position="fixed" data-header-position="fixed">
+  
     <!-- Sidebar Start -->
     <?php include 'sidebar.php'?>
     <!--  Sidebar End -->
+    
+    <!--Pop Up-->
+    <div class="modal__container" id="modal-container">
+      <div class="modal__content">
+        
+
+        <!-- Tombol Close Modal -->
+        <div class="modal__close close-modal" title="Close">
+          <i class="bx bx-x"></i>
+        </div>
+        <!-- Gambar Modal -->
+        <img class="rounded-circle flex-shrink-0" src="../../uploads/pengguna/<?= $p['gambar'] ?>" alt="" style="width: 40px; height: 40px;">
+        
+        <!-- Nama -->
+      
+        <h1 class="modal__title" id="profile-name"><?= $_SESSION['uname'] ?> (<?= $_SESSION['ulevel'] ?>)</h1>
+
+        <!-- No HP -->
+        <p class="modal__description" id="profile-phone">No HP</p>
+
+        <!-- Lokasi -->
+        <p class="modal__description" id="profile-location">Lokasi</p>
+
+        <!-- Tombol Close -->
+        <button class="modal__button modal__button-width close-modal">
+          Close
+        </button>
+      </div>
+    </div>
 
     <!--  Main wrapper -->
     <div class="body-wrapper">
@@ -122,7 +150,9 @@
                           </small>
                         </footer>
                       </blockquote>
-                      <button class="btn bg-light mx-auto d-block w-50">View Profile</button>
+                      <button class="modal__button" id="open-modal" >View Profile</button>
+                                <div class="modal__container" id="modal-container">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -432,8 +462,31 @@ window.onload = () => {
         }
     }
 };
+/*=============== SHOW MODAL ===============*/
+const showModal = (openButton, modalContent) =>{
+    const openBtn = document.getElementById(openButton),
+    modalContainer = document.getElementById(modalContent)
+    
+    if(openBtn && modalContainer){
+        openBtn.addEventListener('click', ()=>{
+            modalContainer.classList.add('show-modal')
+        })
+    }
+}
+
+showModal('open-modal','modal-container')
+
+/*=============== CLOSE MODAL ===============*/
+const closeBtn = document.querySelectorAll('.close-modal')
+
+function closeModal(){
+    const modalContainer = document.getElementById('modal-container')
+    modalContainer.classList.remove('show-modal')
+}
+closeBtn.forEach(c => c.addEventListener('click', closeModal))
 
   </script>
+
 </body>
 
 </html>
